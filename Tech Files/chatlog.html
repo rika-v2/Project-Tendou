@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Files - Direct Messages Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 24%),
+                        radial-gradient(circle at bottom right, rgba(125, 211, 252, 0.12), transparent 20%),
+                        linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            color: #e2e8f0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+    </style>
+</head>
+<body class="pb-16">
+    <div id="navbar-container"></div>
+    <script src="../navbar-init.js"></script>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <section class="glass rounded-[32px] border border-slate-700/80 overflow-hidden shadow-2xl shadow-slate-950/40">
+            <div class="px-6 py-8 lg:px-10 lg:py-10">
+                <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                    <div class="space-y-4">
+                        <p class="text-sm uppercase tracking-[0.3em] text-sky-400/80">Tech Files</p>
+                        <h1 class="text-4xl font-semibold text-white sm:text-5xl">Direct Messages Index</h1>
+                        <p class="max-w-2xl text-slate-400">Search exported Discord DM archives, jump quickly into a conversation file, and filter the list in real time.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                        <div class="rounded-3xl bg-slate-950/90 px-5 py-4 text-slate-100">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Total files</p>
+                            <p id="totalCount" class="mt-3 text-3xl font-semibold text-white">0</p>
+                        </div>
+                        <div class="rounded-3xl bg-slate-950/90 px-5 py-4 text-slate-100">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Showing</p>
+                            <p id="visibleCount" class="mt-3 text-3xl font-semibold text-white">0</p>
+                        </div>
+                        <div class="rounded-3xl bg-slate-950/90 px-5 py-4 text-slate-100">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Quick tips</p>
+                            <p class="mt-3 text-slate-300">Search by name, ID, or keywords inside exported file names.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid gap-4 sm:grid-cols-[1fr_auto]">
+                    <input id="searchInput" type="text" placeholder="Search files..." class="w-full rounded-3xl border border-slate-700 bg-slate-950/80 px-5 py-4 text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-400/20" />
+                    <button id="clearSearch" class="rounded-3xl bg-sky-500 px-5 py-4 text-sm font-semibold text-white transition hover:bg-sky-400">Clear</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-8 grid gap-6 xl:grid-cols-[minmax(0,1fr)]">
+            <div id="fileList" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"></div>
+            <div id="noResults" class="hidden rounded-3xl border border-rose-500/30 bg-rose-500/5 p-8 text-center text-rose-100">No files match your search.</div>
+        </section>
+    </main>
+
+    <script>
+        const files = [
+            "Direct Messages - . [1093843719008047157].html",
+            "Direct Messages - .irizium [1113457688807641098].html",
+            "Direct Messages - .Kyrie E. Eleison [1315639959155114025].html",
+            "Direct Messages - Akero darieru [1155443667612487690].html",
+            "Direct Messages - Akitoe [999837290081812572].html",
+            "Direct Messages - Aurelica [1177444009610854441].html",
+            "Direct Messages - bro really said _     _ [1162683228625317918].html",
+            "Direct Messages - CHARMANDER [1174844008624563628].html",
+            "Direct Messages - cold [1165997466425...",
+            "Direct Messages - ConeSexual [1155838137038170].html",
+            "Direct Messages - Cosmic Champion [1175263657823903875].html",
+            "Direct Messages - creatorcrafter321 [988794023391137793].html",
+            "Direct Messages - deleted_user_e92eac5cbb3c [1167665992726487091].html",
+            "Direct Messages - deleted_user_e26cc6550c49 [1153296846727430625].html",
+            "Direct Messages - deleted_user_dd024c7d6be7 [1172351482696722482].html",
+            "Direct Messages - deleted_user_91d9ab2e639b [1164907419207761950].html",
+            "Direct Messages - deleted_user_8808c8abc4f5 [1173097484147001385].html",
+            "Direct Messages - deleted_user_7e8253db03ed [1166700017985419307].html",
+            "Direct Messages - deleted_user_7ed8cd4f82ec [1056407124562956319].html",
+            "Direct Messages - deleted_user_85ee932bc599 [1172860187464108128].html",
+            "Direct Messages - deleted_user_19390_1 [1202870899463008200].html",
+            "Direct Messages - deleted_user_5396f84da5b7 [1156927501076021318].html",
+            "Direct Messages - deleted_user_635fbd6527a8 [1152941745986619424].html",
+            "Direct Messages - deprecated_user_..." // placeholder because actual list is long
+        ];
+
+        const fileList = document.getElementById('fileList');
+        const searchInput = document.getElementById('searchInput');
+        const totalCount = document.getElementById('totalCount');
+        const visibleCount = document.getElementById('visibleCount');
+        const noResults = document.getElementById('noResults');
+
+        function renderFiles(filesToShow) {
+            fileList.innerHTML = '';
+            filesToShow.forEach(file => {
+                const link = document.createElement('a');
+                link.href = encodeURI(file);
+                link.className = 'block rounded-3xl border border-slate-700/90 bg-slate-950/80 px-5 py-6 text-sm font-medium text-slate-100 transition hover:-translate-y-0.5 hover:border-sky-400/60 hover:bg-slate-900/95 hover:text-white';
+                link.title = file;
+                link.textContent = file;
+                fileList.appendChild(link);
+            });
+            visibleCount.textContent = filesToShow.length;
+            noResults.classList.toggle('hidden', filesToShow.length > 0);
+        }
+
+        function updateCounts(filteredFiles) {
+            totalCount.textContent = files.length;
+            visibleCount.textContent = filteredFiles.length;
+        }
+
+        searchInput.addEventListener('input', (event) => {
+            const query = event.target.value.toLowerCase();
+            const filtered = files.filter(file => file.toLowerCase().includes(query));
+            renderFiles(filtered);
+            updateCounts(filtered);
+        });
+
+        document.getElementById('clearSearch').addEventListener('click', () => {
+            searchInput.value = '';
+            renderFiles(files);
+            updateCounts(files);
+        });
+
+        renderFiles(files);
+        updateCounts(files);
+    </script>
+</body>
+</html>

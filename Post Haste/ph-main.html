@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Haste - Main Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-950">
+    <div id="navbar-container" class="w-full"></div>
+    <script src="../navbar-init.js"></script>
+    <!-- Decorative Background Glows -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl w-full text-center">
+        <header class="mb-16">
+            <h1 class="text-7xl font-black text-white tracking-tighter mb-4 italic">
+                POST <span class="text-blue-500">HASTE</span>
+            </h1>
+            <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto">
+                For Stella Sora Private Server.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+            <!-- Emblem Builder Feature -->
+            <a href="emblem-builder.html" class="group p-8 bg-slate-900 border border-slate-800 rounded-3xl transition-all hover:bg-slate-800/50 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10">
+                <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3">Emblem Builder</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Design custom emblems with automated ID calculation for attributes, skills, and potentials.
+                </p>
+                <div class="inline-flex items-center text-blue-400 text-sm font-bold group-hover:translate-x-2 transition-transform">
+                    Open Builder
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Trekker Info Feature -->
+            <a href="character-list.html" class="group p-8 bg-slate-900 border border-slate-800 rounded-3xl transition-all hover:bg-slate-800/50 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10">
+                <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3">Trekker Info</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    View a complete list of supported Trekkers and their unique potential names.
+                </p>
+                <div class="inline-flex items-center text-emerald-400 text-sm font-bold group-hover:translate-x-2 transition-transform">
+                    View Database
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Emblem of Insanity Feature -->
+            <a href="emblem-of-insanity.html" class="group p-8 bg-slate-900 border border-slate-800 rounded-3xl transition-all hover:bg-slate-800/50 hover:border-red-500/50 hover:shadow-2xl hover:shadow-red-500/10">
+                <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3">Emblem of Insanity</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Bulk generate Level 3 Potential commands for all slots at once. Highly efficient.
+                </p>
+                <div class="inline-flex items-center text-red-400 text-sm font-bold group-hover:translate-x-2 transition-transform">
+                    Enter Madness
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Team Showcase Feature -->
+            <a href="team-builder.html" class="group p-8 bg-slate-900 border border-slate-800 rounded-3xl transition-all hover:bg-slate-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10">
+                <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 mb-6 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3">Team Showcase</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Experiment with different team compositions and showcase your 3-trekker combinations.
+                </p>
+                <div class="inline-flex items-center text-indigo-400 text-sm font-bold group-hover:translate-x-2 transition-transform">
+                    Build Team
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Disc Reference Feature -->
+            <a href="disc-reference.html" class="group p-8 bg-slate-900 border border-slate-800 rounded-3xl transition-all hover:bg-slate-800/50 hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10">
+                <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3">Disc Reference</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    Browse the database of Discs, including their IDs, names, and elemental alignments.
+                </p>
+                <div class="inline-flex items-center text-amber-400 text-sm font-bold group-hover:translate-x-2 transition-transform">
+                    View Discs
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Placeholder: Item Generator -->
+            <div class="p-8 bg-slate-900/40 border border-slate-800/50 rounded-3xl opacity-50 grayscale cursor-not-allowed">
+                <div class="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-600 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-600 mb-3 text-center">More Tools Soon</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+211001	Crisp Morning	None				
+211002	Sunny Breeze	None				
+211003	Indigo Sunset	None			
+211004	Pink Dream	None			
+211005	Lonely Dunes	None			
+211006	Sweet Creek	None		
+211007	Starlit Hope	None			
+211008	Homeward Path	None																			
+212001	Grand Feast	None									
+212002	Whoopla	None			
+212003	Elysium	None											
+212005	Flare Frenzy	Ignis																			
+212006	Auspicious Glow	Lux																			
+212007	Brave the Wind	Ventus																			
+212008	Bubbles	Aqua																			
+212009	Eclipse	Umbra																			
+212010	Fortitude	Terra																			
+213003	Scorching Night's End	Ignis																			
+213004	Twin Moon Mischief	Ignis																			
+213005	★Bam Bam Girl★	Lux																			
+213006	Good Night	Lux																			
+213007	Emerald Dream	Ventus																			
+213008	Tranquil Retreat	Ventus																			
+213009	Rainy Tune	Aqua																			
+213010	Steam Syndrome	Aqua																			
+213011	Meow Rhythm	Umbra																			
+213012	Starry Night Ode	Umbra																			
+213013	Leaf Her to Me	Terra																			
+213014	The Knight's Smith	Terra																			
+213015	Unknown Fragrance	Ventus																			
+213016	Cage of Roses	Ignis																			
+213017	★Rolling Life★	Lux																			
+13018	Soda Shopping	Aqua																			
+213019	Delusion	Umbra																			
+213020	The Shining	Terra																			
+213021	Miraculous Anthem	Ventus																			
+213022	Love River's Curse	Ignis																			
+213023	Pure White	Lux																			
+213024	Holiday Bubble	Aqua																			
+213025	Sweet Invitation	Umbra																			
+213026	Vent It Out ♥	Terra	
+
+214001	Meowing Cat God	Ignis																			
+214002	Sky, Flowers, Poem	Ventus																			
+214004	Wisteria Dream	Umbra																			
+214005	Sunlit Blossom	Aqua																			
+214006	Witch's Swing	Umbra																			
+214007	Midnight Mayhem	Lux																			
+214008	Soaring Blue	Aqua																			
+214009	New Star Prelude	Ventus																			
+214010	Prayer Beneath Light	Lux																			
+214011	Summer Afternoon Rain	Aqua																			
+214012	Those with Ambition	Umbra																			
+214013	Voyage Blueprint	Ignis																			
+214014	Sweet Times	Terra																			
+214015	Deer's Song	Ventus																			
+214016	Chronicles of Spring	Ventus																			
+214017	Fireworks	Ignis																			
+214018	Lemon & Black Tea	Ventus																			
+214019	One Shot, One Down	Ignis																			
+214020	Sparkling Moment	Lux																			
+214021	United by Fate	Aqua																			
+214022	The Meow	Umbra																			
+214023	Colors Pierce the Grey	Terra																			
+214024	One, Two, Three, Jump!	Ventus																			
+214026	Sword Against Stream	Aqua																			
+214027	Mystic Brushstrokes	Ignis																			
+214028	Daylight Garden	Ventus																			
+214030	A Moment in the Afternoon   Lux																			
+214031	The Clash of Blade and Axe  Aqua																			
+214032	Dream Factory of ☆Truth	Umbra																			
+214033	Dancing with the Bones	Terra																			
+214036	The Lost Pilgrim	Terra																			
+214037	Claw the Claw	Terra																			
+214038	Ripples of Nostalgia	Lux																			
+214039	Summer Sanctuary	Lux																			
+214040	Fist of Courage	Ignis																			
+214041	A Gift for the Journey	Ignis																			
+214042	Wine Warm, Lamps Alight Terra																			
+214043	The Bud of Change	Umbra																			
+214044	Veiled Dawn of Spring	Terra																			
+214045	Petals of Blooming Mirage   Umbra																			
+214046	Dawn After Winter   Ventus																			
+214047	Delivered by the Breeze Aqua																			
+214048	Snowy Night Surprise    Ignis																		
+214049	Traces of Starlight None																			
+214050	Phantom of the Banquet  Umbra
+
+
+

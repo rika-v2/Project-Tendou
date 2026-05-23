@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100">
+    <!-- Load Navbar -->
+    <div id="navbar-container"></div>
+    <script src="navbar-init.js"></script>
+
+    <!-- Subtle background video -->
+    <div class="fixed inset-0 -z-10 opacity-40">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+            <source src="images/mari1.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <main class="relative z-10 max-w-6xl mx-auto p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-extrabold text-white">Gallery</h1>
+            <p class="text-slate-400 mt-2">A curated selection of images and clips.</p>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <img src="" alt="thumb" class="w-full h-56 object-cover" onerror="this.style.display='none'">
+                <div class="p-4 text-slate-300">None</div>
+            </div>
+            
+             <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <img src="" alt="thumb" class="w-full h-56 object-cover" onerror="this.style.display='none'">
+                <div class="p-4 text-slate-300">None</div>
+            </div>
+
+             <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <img src="" alt="thumb" class="w-full h-56 object-cover" onerror="this.style.display='none'">
+                <div class="p-4 text-slate-300">None</div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <video controls class="w-full h-56 object-cover bg-black">
+                    <source src="images/Noaholic/Miyako (1).mp4" type="video/mp4">
+                </video>
+                <div class="p-4 text-slate-300">Miyako (1)</div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <video controls class="w-full h-56 object-cover bg-black">
+                    <source src="images/Noaholic/Miyako (2).mp4" type="video/mp4">
+                </video>
+                <div class="p-4 text-slate-300">Miyako (2)</div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+                <video controls class="w-full h-56 object-cover bg-black">
+                    <source src="images/Noaholic/Miyako (3).mp4" type="video/mp4">
+                </video>
+                <div class="p-4 text-slate-300">Miyako (3)</div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center p-8 text-slate-500">
+                No more media found. Add images to the `images/` folder.
+            </div>
+        </div>
+    </main>
+</body>
+</html>

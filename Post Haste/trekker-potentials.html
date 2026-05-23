@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Haste - Trekker Potentials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-12 bg-slate-950">
+    <div id="navbar-container" class="w-full"></div>
+    <script src="../navbar-init.js"></script>
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div id="headerContent" class="flex items-center gap-6">
+                <!-- Injected via Script -->
+            </div>
+            <a href="supported-pots.html" class="inline-flex items-center justify-center px-6 py-3 bg-slate-900 border border-slate-800 text-white rounded-xl hover:bg-slate-800 transition-all font-bold gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Menu
+            </a>
+        </header>
+
+        <div id="potentialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Injected via Script -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        function renderTrekkerDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const headerContent = document.getElementById('headerContent');
+            const potentialsGrid = document.getElementById('potentialsGrid');
+
+            if (!id || !trekkerSpecificPotentials[id]) {
+                headerContent.innerHTML = `<h1 class="text-4xl font-black text-white">Trekker not found.</h1>`;
+                return;
+            }
+
+            const name = trekkerDB[id] || 'Unknown';
+            const stars = trekkerStars[id] || 4;
+            const pots = trekkerSpecificPotentials[id];
+            const element = trekkerElements[id] || 'Unknown';
+            const elementColor = elementColors[element] || 'text-slate-400';
+
+            headerContent.innerHTML = `
+                <img src="assets/trekkers/${id}.webp" class="w-24 h-24 rounded-3xl object-cover bg-slate-900 border border-slate-800 shadow-2xl" onerror="this.style.display='none'">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-3 py-1 bg-slate-900 text-slate-400 text-xs font-mono font-bold rounded-lg border border-slate-800">ID: ${id}</span>
+                        <span class="text-sm font-bold ${stars === 5 ? 'text-amber-400' : 'text-purple-400'}">${'★'.repeat(stars)}</span>
+                        <span class="text-xs font-black uppercase ${elementColor}">${element}</span>
+                    </div>
+                    <h1 class="text-4xl font-black text-white tracking-tight">${name} <span class="text-emerald-500">Potentials</span></h1>
+                </div>
+            `;
+
+            let html = '';
+            Object.entries(pots).forEach(([potId, potName]) => {
+                const isRare = rarePotentialNames.includes(potName);
+                const style = isRare ? 'border-amber-500/30 bg-amber-500/5' : 'border-slate-800';
+                const textStyle = isRare ? 'text-amber-400 font-bold' : 'text-slate-200 font-semibold';
+                
+                let category = "Main";
+                if (potId >= 480 && potId <= 560) category = "Support";
+                if (potId >= 570) category = "Ultimate";
+
+                html += `
+                    <div class="bg-slate-900 border ${style} p-5 rounded-2xl hover:border-emerald-500/30 transition-all group relative overflow-hidden">
+                        <div class="text-[10px] text-slate-600 font-mono font-bold uppercase tracking-widest mb-1">ID: ${potId} • ${category}</div>
+                        <div class="${textStyle} text-lg">${isRare ? '✦ ' : ''}${potName}</div>
+                    </div>`;
+            });
+            potentialsGrid.innerHTML = html;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', renderTrekkerDetails);
+    </script>
+</body>
+</html>

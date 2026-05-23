@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Haste - Trekker Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-12 bg-slate-950">
+        <div id="navbar-container" class="w-full"></div>
+        <script src="../navbar-init.js"></script>
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div id="headerContent" class="flex items-center gap-6">
+                <!-- Injected via Script -->
+            </div>
+            <a href="character-list.html" class="inline-flex items-center justify-center px-6 py-3 bg-slate-900 border border-slate-800 text-white rounded-xl hover:bg-slate-800 transition-all font-bold gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Menu
+            </a>
+        </header>
+
+        <div id="potentialsContainer" class="space-y-12">
+            <!-- Categories injected here -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        function renderTrekkerDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const headerContent = document.getElementById('headerContent');
+            const potentialsContainer = document.getElementById('potentialsContainer');
+
+            if (!id || !trekkerSpecificPotentials[id]) {
+                headerContent.innerHTML = `<h1 class="text-4xl font-black text-white">Trekker not found.</h1>`;
+                return;
+            }
+
+            const name = trekkerDB[id] || 'Unknown';
+            const stars = trekkerStars[id] || 4;
+            const pots = trekkerSpecificPotentials[id];
+            const element = trekkerElements[id] || 'Unknown';
+            const elementColor = elementColors[element] || 'text-slate-400';
+
+            headerContent.innerHTML = `
+                <img src="assets/trekkers/${id}.webp" class="w-24 h-24 rounded-3xl object-cover bg-slate-900 border border-slate-800 shadow-2xl" onerror="this.style.display='none'">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-3 py-1 bg-slate-900 text-slate-400 text-xs font-mono font-bold rounded-lg border border-slate-800">ID: ${id}</span>
+                        <span class="text-sm font-bold ${stars === 5 ? 'text-amber-400' : 'text-purple-400'}">${'★'.repeat(stars)}</span>
+                        <span class="text-xs font-black uppercase ${elementColor}">${element}</span>
+                    </div>
+                    <h1 class="text-4xl font-black text-white tracking-tight">${name}</h1>
+                </div>
+            `;
+
+            // Group IDs by Name
+            const grouped = {};
+            Object.entries(pots).forEach(([potId, potName]) => {
+                if (!grouped[potName]) grouped[potName] = [];
+                grouped[potName].push(potId);
+            });
+
+            const categories = {
+                "Main Potentials": [],
+                "Support Potentials": [],
+                "Ultimate Potentials": []
+            };
+
+            Object.entries(grouped).forEach(([potName, ids]) => {
+                const primaryId = parseInt(ids[0]);
+                let category = "Ultimate Potentials";
+                
+                const isMain = (primaryId >= 390 && primaryId <= 470) || (primaryId >= 514401 && primaryId <= 514413);
+                const isSupport = (primaryId >= 480 && primaryId <= 560) || (primaryId >= 514421 && primaryId <= 514433);
+                
+                if (isMain) category = "Main Potentials";
+                else if (isSupport) category = "Support Potentials";
+
+                const isRare = rarePotentialNames.includes(potName);
+                const combinedIds = ids.sort((a, b) => a - b).join(' / ');
+                const imageId = ids.find(i => i.startsWith('5144')) || ids[0];
+                
+                categories[category].push({
+                    id: primaryId,
+                    name: potName,
+                    ids: combinedIds,
+                    imageId: imageId,
+                    isRare: isRare
+                });
+            });
+
+            let finalHtml = '';
+            Object.entries(categories).forEach(([catName, items]) => {
+                if (items.length === 0) return;
+                items.sort((a, b) => a.id - b.id);
+
+                const baseCoreId = `5${id}`;
+                const c1Ids = [`${baseCoreId}01`, `${baseCoreId}02`].map(String);
+                const c2Ids = [`${baseCoreId}03`, `${baseCoreId}04`].map(String);
+
+                const core1 = items.filter(i => i.ids.split(' / ').some(cid => c1Ids.includes(cid)));
+                const core2 = items.filter(i => i.ids.split(' / ').some(cid => c2Ids.includes(cid)));
+                const pool = items.filter(i => !core1.includes(i) && !core2.includes(i));
+
+                const rares = pool.filter(i => i.isRare);
+                const commons = pool.filter(i => !i.isRare);
+
+                const getRow = (cores) => {
+                    const row = [...cores];
+                    row.push(...rares.splice(0, 2));
+                    row.push(...commons.splice(0, 5 - row.length));
+                    return row;
+                };
+
+                const row1 = getRow(core1);
+                const row2 = getRow(core2);
+                const remaining = [...rares, ...commons];
+
+                const renderItem = (item) => `
+                    <div class="bg-slate-900 border ${item.isRare ? 'border-amber-500/30 bg-amber-500/5' : 'border-slate-800'} p-4 rounded-3xl hover:border-emerald-500/30 transition-all group flex flex-col items-center text-center">
+                        <div class="relative mb-3">
+                            <img src="assets/trekker-pots/${id}/${item.imageId}.webp" class="w-20 h-20 object-contain drop-shadow-2xl" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%221%22 height=%221%22/>'; this.nextElementSibling.style.display='block'">
+                            <div class="hidden absolute inset-0 flex items-center justify-center text-slate-700 font-bold text-xs uppercase">No Icon</div>
+                        </div>
+                        <div class="text-[10px] text-slate-500 font-mono font-bold mb-1">${item.ids}</div>
+                        <div class="${item.isRare ? 'text-amber-400 font-bold' : 'text-slate-200 font-medium'} text-sm leading-tight">${item.isRare ? '✦ ' : ''}${item.name}</div>
+                    </div>`;
+
+                finalHtml += `
+                    <section>
+                        <h2 class="text-xl font-bold text-slate-500 uppercase tracking-widest mb-6 border-b border-slate-800 pb-2">${catName}</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
+                            ${row1.map(renderItem).join('')}
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
+                            ${row2.map(renderItem).join('')}
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            ${remaining.map(renderItem).join('')}
+                        </div>
+                    </section>
+                `;
+            });
+            
+            potentialsContainer.innerHTML = finalHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderTrekkerDetails);
+    </script>
+</body>
+</html>

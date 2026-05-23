@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <meta name="color-scheme" content="dark">
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+    <!-- Load the Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Fullscreen video background -->
+    <div class="fixed inset-0 -z-10">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+            <source src="images/mari1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <!-- Decorative header using Post Haste UI -->
+    <div class="relative z-10 max-w-5xl mx-auto px-6 py-40 text-center">
+        <header class="mb-4">
+            <h1 class="text-6xl font-extrabold tracking-tight mb-2 italic">PAGE UNAVAILABLE</h1> <span class="text-blue-400">Work In Progress</span></h1>
+            <p class="text-slate-300 text-lg">Come Back Later.</p>
+        </header>
+        <p class="text-slate-400 mt-6">Explore the site using the navigation above.</p>
+    </div>
+
+    <script src="navbar-init.js"></script>
+</body>
+</html>

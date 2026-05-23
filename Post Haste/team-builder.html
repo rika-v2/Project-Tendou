@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Haste - Team Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .dropdown-content { display: none; }
+        .dropdown-content.show { display: block; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
+    <div id="navbar-container" class="w-full"></div>
+    <script src="../navbar-init.js"></script>
+    <div class="max-w-[90rem] w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-6 border-b border-indigo-900/50 bg-indigo-950/10 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-indigo-400">Team Showcase</h1>
+                <p class="text-slate-400 text-sm mt-1">Assemble your perfect three-trekker squad.</p>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Main Menu
+            </a>
+        </div>
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Slot 1 -->
+                <div class="space-y-4">
+                    <div class="min-h-[28rem] bg-slate-950/50 rounded-3xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-start text-center p-6 transition-all overflow-y-auto custom-scrollbar" id="preview-1">
+                        <div class="text-slate-600 mb-2">Slot 1</div>
+                        <div class="text-lg font-bold text-slate-500" id="name-1">Empty</div>
+                    </div>
+                    <div class="relative">
+                        <input type="text" data-slot="1" class="trekker-search w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="Select Trekker...">
+                        <div class="dropdown-content absolute z-50 w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl max-h-48 overflow-y-auto custom-scrollbar" id="dropdown-1"></div>
+                    </div>
+                </div>
+
+                <!-- Slot 2 -->
+                <div class="space-y-4">
+                    <div class="min-h-[28rem] bg-slate-950/50 rounded-3xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-start text-center p-6 transition-all overflow-y-auto custom-scrollbar" id="preview-2">
+                        <div class="text-slate-600 mb-2">Slot 2</div>
+                        <div class="text-lg font-bold text-slate-500" id="name-2">Empty</div>
+                    </div>
+                    <div class="relative">
+                        <input type="text" data-slot="2" class="trekker-search w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="Select Trekker...">
+                        <div class="dropdown-content absolute z-50 w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl max-h-48 overflow-y-auto custom-scrollbar" id="dropdown-2"></div>
+                    </div>
+                </div>
+
+                <!-- Slot 3 -->
+                <div class="space-y-4">
+                    <div class="min-h-[28rem] bg-slate-950/50 rounded-3xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-start text-center p-6 transition-all overflow-y-auto custom-scrollbar" id="preview-3">
+                        <div class="text-slate-600 mb-2">Slot 3</div>
+                        <div class="text-lg font-bold text-slate-500" id="name-3">Empty</div>
+                    </div>
+                    <div class="relative">
+                        <input type="text" data-slot="3" class="trekker-search w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="Select Trekker...">
+                        <div class="dropdown-content absolute z-50 w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl max-h-48 overflow-y-auto custom-scrollbar" id="dropdown-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 pt-6 border-t border-slate-800">
+                <button id="saveTeam" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-900/20">
+                    Save Team
+                </button>
+                <button id="resetTeam" class="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all">
+                    Reset Composition
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="team-builder.js"></script>
+</body>
+</html>
