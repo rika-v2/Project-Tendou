@@ -54,43 +54,10 @@ function setupNavbarTransitions() {
             event.preventDefault();
             body.classList.add('page-leaving');
             setTimeout(() => {
-                loadPageWithAJAX(link.href);
+                window.location.href = link.href;
             }, 300);
         });
     });
-}
-
-function loadPageWithAJAX(url) {
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            // Extract body content from the fetched HTML
-            const parser = new DOMParser();
-            const newDoc = parser.parseFromString(html, 'text/html');
-            const newContent = newDoc.querySelector('main') || newDoc.body;
-            
-            // Replace main content
-            const main = document.querySelector('main');
-            if (main) {
-                main.innerHTML = newContent.innerHTML;
-            }
-            
-            // Update page title
-            document.title = newDoc.title;
-            
-            // Update URL
-            window.history.pushState({ url }, newDoc.title, url);
-            
-            // Re-initialize navbar transitions for new links
-            setTimeout(() => {
-                document.body.classList.remove('page-leaving');
-                setupNavbarTransitions();
-            }, 50);
-        })
-        .catch(() => {
-            // Fallback to full page reload if AJAX fails
-            window.location.href = url;
-        });
 
     const navToggle = document.getElementById('nav-toggle');
     if (navToggle) {
@@ -101,29 +68,4 @@ function loadPageWithAJAX(url) {
     }
 }
 
-function initAmbientMusic() {
-    // Only create audio element once
-    if (document.getElementById('ambientMusic')) return;
-    
-    const audio = document.createElement('audio');
-    audio.id = 'ambientMusic';
-    audio.loop = true;
-    audio.volume = 0.3;
-    
-    const source = document.createElement('source');
-    source.src = window.location.protocol === 'file:' && window.location.pathname.includes('Post Haste') ? '../audio/命に嫌われているまふまふ歌ってみた.mp3' : 'audio/命に嫌われているまふまふ歌ってみた.mp3';
-    source.type = 'audio/mpeg';
-    
-    audio.appendChild(source);
-    document.body.appendChild(audio);
-    
-    // Try autoplay
-    audio.play().catch(() => {
-        document.addEventListener('click', () => audio.play(), { once: true });
-    });
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    initNavbar();
-    initAmbientMusic();
-});
+window.addEventListener('DOMContentLoaded', initNavbar);
