@@ -35,19 +35,19 @@
     </div>
 
     <!-- Ambient music player -->
-     <audio id="ambientMusic" loop>
+    <audio id="ambientMusic" loop>
         <source src="audio/命に嫌われているまふまふ歌ってみた.mp3" type="audio/mpeg">
     </audio>
 
-    <script src="navbar-init.js">
+    <script src="navbar-init.js"></script>
+    <script>
         const audio = document.getElementById('ambientMusic');
-    const toggle = document.getElementById('musicToggle');
-    audio.volume = 0.3;
-    
-    // Try autoplay
-    audio.play().catch(() => {
-        document.addEventListener('click', () => audio.play(), { once: true });
-    });
+        audio.volume = 0.3;
+        
+        // Try autoplay
+        audio.play().catch(() => {
+            document.addEventListener('click', () => audio.play(), { once: true });
+        });
     </script>
 </body>
 </html>
