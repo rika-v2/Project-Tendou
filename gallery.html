@@ -14,7 +14,8 @@
 
     <!-- Subtle background video -->
     <div class="fixed inset-0 -z-10 opacity-40">
-        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover" 
+    onloadedmetadata="this.play()">
             <source src="images/mari1.mp4" type="video/mp4">
         </video>
     </div>
