@@ -34,6 +34,13 @@
       opacity: 1;
       transform: translateY(0);
     }
+    #readerContainer img {
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
@@ -43,45 +50,48 @@
   <script src="../navbar-init.js"></script>
 
   <!-- MAIN CONTENT -->
-  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-12">
 
     <!-- LIBRARY VIEW -->
     <section id="libraryView">
-      <div class="mb-8">
-        <h1 class="text-4xl md:text-5xl font-bold mb-2">Archived Manga</h1>
-        <p class="text-slate-400">Browse and read archived manga collections</p>
+      <div class="mb-6 sm:mb-8">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Archived Manga</h1>
+        <p class="text-sm sm:text-base text-slate-400">Browse and read archived manga collections</p>
       </div>
 
-      <div id="libraryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+      <div id="libraryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6"></div>
     </section>
 
     <!-- CHAPTERS VIEW -->
     <section id="chaptersView" class="hidden">
-      <div class="mb-8 flex items-center gap-4">
-        <button id="backBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium">
-          ← Back to Library
+      <div class="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <button id="backBtn" class="px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium text-sm sm:text-base whitespace-nowrap h-10 sm:h-auto">
+          ← Back
         </button>
-        <div>
-          <h1 id="mangaTitle" class="text-4xl font-bold"></h1>
-          <p id="mangaDescription" class="text-slate-400 mt-2"></p>
+        <div class="min-w-0">
+          <h1 id="mangaTitle" class="text-2xl sm:text-3xl md:text-4xl font-bold truncate"></h1>
+          <p id="mangaDescription" class="text-xs sm:text-sm text-slate-400 mt-1 sm:mt-2"></p>
         </div>
       </div>
 
-      <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-800/50">
-        <h2 class="text-xl font-bold mb-6">Chapters</h2>
-        <div id="chaptersList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      <div class="bg-slate-900/50 rounded-xl p-4 sm:p-6 border border-slate-800/50">
+        <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Chapters</h2>
+        <div id="chaptersList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"></div>
       </div>
     </section>
 
     <!-- READER VIEW -->
     <section id="readerView" class="hidden">
-      <div class="mb-6 flex items-center gap-4">
-        <button id="backFromReaderBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium">
-          ← Back
-        </button>
-        <h2 id="readerTitle" class="text-2xl font-bold"></h2>
+      <div class="sticky top-0 z-20 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800/50 mb-6 py-3 px-3 sm:py-4 sm:px-4 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8">
+        <div class="max-w-7xl mx-auto flex items-center gap-2 sm:gap-4">
+          <button id="backFromReaderBtn" class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium text-sm sm:text-base h-10 sm:h-auto whitespace-nowrap">
+            ← Back
+          </button>
+          <h2 id="readerTitle" class="text-lg sm:text-2xl font-bold flex-1 truncate"></h2>
+          <div class="text-xs sm:text-sm text-slate-400 hidden sm:block">Use arrow keys</div>
+        </div>
       </div>
-      <div id="readerContainer" class="flex flex-col items-center gap-2 bg-black rounded-lg p-4"></div>
+      <div id="readerContainer" class="flex flex-col items-center gap-3 sm:gap-4 pb-12 px-3 sm:px-4 md:px-6 lg:px-8"></div>
     </section>
 
   </main>

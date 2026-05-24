@@ -93,14 +93,40 @@ function openVersion(manga, version) {
   readerTitle.textContent = `${manga.title} - ${version.name}`;
   showView(readerView);
 
+  const progressBar = document.createElement("div");
+  progressBar.className = "fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 to-blue-500 z-40";
+  document.body.appendChild(progressBar);
+
   for (let i = 1; i <= version.pages; i++) {
+    const pageWrapper = document.createElement("div");
+    pageWrapper.className = "flex flex-col items-center py-6 px-4";
+
+    // Try with leading/trailing spaces first (for Japanese version)
     const img = document.createElement("img");
-    img.src = `Contents/${encodeURIComponent(manga.title)}/${encodeURIComponent(version.name)}/(${i}).jpg`;
+    img.src = `Contents/${encodeURIComponent(manga.title)}/${encodeURIComponent(version.name)}/( ${i} ).jpg`;
     img.loading = "lazy";
-    img.className = "w-full max-w-4xl object-contain rounded-lg";
+    img.className = "w-full max-w-3xl object-contain rounded-lg shadow-2xl border border-slate-700/50 hover:shadow-sky-500/20 transition-shadow";
     img.alt = `Page ${i}`;
-    readerContainer.appendChild(img);
+    
+    // Fallback: try without spaces if the first doesn't load
+    img.onerror = function() {
+      img.src = `Contents/${encodeURIComponent(manga.title)}/${encodeURIComponent(version.name)}/(${i}).jpg`;
+      img.onerror = function() {
+        pageWrapper.style.display = "none";
+      };
+    };
+
+    // Add page number indicator
+    const pageNum = document.createElement("div");
+    pageNum.className = "text-sm text-slate-400 mt-3";
+    pageNum.textContent = `Page ${i} of ${version.pages}`;
+
+    pageWrapper.appendChild(img);
+    pageWrapper.appendChild(pageNum);
+    readerContainer.appendChild(pageWrapper);
   }
+
+  setTimeout(() => progressBar.remove(), 1500);
 }
 
 backBtn.addEventListener("click", () => {
@@ -113,6 +139,19 @@ backBtn.addEventListener("click", () => {
 
 backFromReaderBtn.addEventListener("click", () => {
   openManga(currentManga);
+});
+
+// Keyboard navigation in reader
+document.addEventListener("keydown", (e) => {
+  if (readerView.classList.contains("hidden")) return;
+  
+  if (e.key === "ArrowUp") {
+    window.scrollBy(0, -200);
+  } else if (e.key === "ArrowDown") {
+    window.scrollBy(0, 200);
+  } else if (e.key === "Escape") {
+    openManga(currentManga);
+  }
 });
 
 renderLibrary();
