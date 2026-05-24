@@ -34,20 +34,6 @@
         <p class="text-slate-400 mt-6">Explore the site using the navigation above.</p>
     </div>
 
-    <!-- Ambient music player -->
-    <audio id="ambientMusic" loop>
-        <source src="audio/命に嫌われているまふまふ歌ってみた.mp3" type="audio/mpeg">
-    </audio>
-
     <script src="navbar-init.js"></script>
-    <script>
-        const audio = document.getElementById('ambientMusic');
-        audio.volume = 0.3;
-        
-        // Try autoplay
-        audio.play().catch(() => {
-            document.addEventListener('click', () => audio.play(), { once: true });
-        });
-    </script>
 </body>
 </html>

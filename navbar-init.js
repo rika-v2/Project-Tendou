@@ -68,4 +68,29 @@ function setupNavbarTransitions() {
     }
 }
 
-window.addEventListener('DOMContentLoaded', initNavbar);
+function initAmbientMusic() {
+    // Only create audio element once
+    if (document.getElementById('ambientMusic')) return;
+    
+    const audio = document.createElement('audio');
+    audio.id = 'ambientMusic';
+    audio.loop = true;
+    audio.volume = 0.3;
+    
+    const source = document.createElement('source');
+    source.src = window.location.protocol === 'file:' && window.location.pathname.includes('Post Haste') ? '../audio/命に嫌われているまふまふ歌ってみた.mp3' : 'audio/命に嫌われているまふまふ歌ってみた.mp3';
+    source.type = 'audio/mpeg';
+    
+    audio.appendChild(source);
+    document.body.appendChild(audio);
+    
+    // Try autoplay
+    audio.play().catch(() => {
+        document.addEventListener('click', () => audio.play(), { once: true });
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    initNavbar();
+    initAmbientMusic();
+});
