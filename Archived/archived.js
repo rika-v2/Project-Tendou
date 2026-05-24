@@ -2,15 +2,28 @@ const libraryGrid = document.getElementById("libraryGrid");
 const chaptersList = document.getElementById("chaptersList");
 const mangaTitle = document.getElementById("mangaTitle");
 const mangaDescription = document.getElementById("mangaDescription");
-const readerContainer = document.getElementById("readerContainer");
-const readerTitle = document.getElementById("readerTitle");
 const libraryView = document.getElementById("libraryView");
 const chaptersView = document.getElementById("chaptersView");
 const readerView = document.getElementById("readerView");
 const backBtn = document.getElementById("backBtn");
 const backFromReaderBtn = document.getElementById("backFromReaderBtn");
+const pageIndicator = document.getElementById("pageIndicator");
+const pageDisplay = document.getElementById("pageDisplay");
+const pageInput = document.getElementById("pageInput");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const modeToggle = document.getElementById("modeToggle");
+const leftPageImg = document.getElementById("leftPageImg");
+const rightPageImg = document.getElementById("rightPageImg");
+const leftPageLoading = document.getElementById("leftPageLoading");
+const rightPageLoading = document.getElementById("rightPageLoading");
+const readerTitle = document.getElementById("readerTitle");
 
 let currentManga = null;
+let currentVersion = null;
+let currentPage = 1;
+let isBookMode = true;
+const pages = {};
 
 function showView(view) {
   libraryView.classList.add("hidden");
@@ -88,47 +101,82 @@ function openManga(manga) {
   });
 }
 
-function openVersion(manga, version) {
-  readerContainer.innerHTML = "";
-  readerTitle.textContent = `${manga.title} - ${version.name}`;
-  showView(readerView);
+function loadPage(pageNum) {
+  if (pageNum < 1 || pageNum > currentVersion.pages) return;
+  
+  currentPage = pageNum;
+  pageInput.value = pageNum;
+  pageDisplay.textContent = `Page ${pageNum}`;
+  pageIndicator.textContent = `${pageNum}/${currentVersion.pages}`;
 
-  const progressBar = document.createElement("div");
-  progressBar.className = "fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 to-blue-500 z-40";
-  document.body.appendChild(progressBar);
-
-  for (let i = 1; i <= version.pages; i++) {
-    const pageWrapper = document.createElement("div");
-    pageWrapper.className = "flex flex-col items-center py-6 px-4";
-
-    // Try with leading/trailing spaces first (for Japanese version)
-    const img = document.createElement("img");
-    img.src = `Contents/${encodeURIComponent(manga.title)}/${encodeURIComponent(version.name)}/( ${i} ).jpg`;
-    img.loading = "lazy";
-    img.className = "w-full max-w-3xl object-contain rounded-lg shadow-2xl border border-slate-700/50 hover:shadow-sky-500/20 transition-shadow";
-    img.alt = `Page ${i}`;
-    
-    // Fallback: try without spaces if the first doesn't load
-    img.onerror = function() {
-      img.src = `Contents/${encodeURIComponent(manga.title)}/${encodeURIComponent(version.name)}/(${i}).jpg`;
-      img.onerror = function() {
-        pageWrapper.style.display = "none";
-      };
-    };
-
-    // Add page number indicator
-    const pageNum = document.createElement("div");
-    pageNum.className = "text-sm text-slate-400 mt-3";
-    pageNum.textContent = `Page ${i} of ${version.pages}`;
-
-    pageWrapper.appendChild(img);
-    pageWrapper.appendChild(pageNum);
-    readerContainer.appendChild(pageWrapper);
+  if (isBookMode) {
+    // Book mode: show two pages side by side
+    loadPageImage(leftPageImg, leftPageLoading, pageNum);
+    if (pageNum + 1 <= currentVersion.pages) {
+      loadPageImage(rightPageImg, rightPageLoading, pageNum + 1);
+    } else {
+      rightPageImg.src = "";
+      rightPageLoading.style.display = "flex";
+    }
+  } else {
+    // Scroll mode: show single page
+    loadPageImage(leftPageImg, leftPageLoading, pageNum);
+    rightPageImg.src = "";
   }
-
-  setTimeout(() => progressBar.remove(), 1500);
 }
 
+function loadPageImage(imgElement, loadingElement, pageNum) {
+  const cacheKey = `${currentManga.title}-${currentVersion.name}-${pageNum}`;
+  
+  if (pages[cacheKey]) {
+    imgElement.src = pages[cacheKey];
+    loadingElement.style.display = "none";
+    return;
+  }
+
+  imgElement.src = `Contents/${encodeURIComponent(currentManga.title)}/${encodeURIComponent(currentVersion.name)}/( ${pageNum} ).jpg`;
+  loadingElement.style.display = "flex";
+
+  imgElement.onload = function() {
+    loadingElement.style.display = "none";
+    pages[cacheKey] = imgElement.src;
+  };
+
+  imgElement.onerror = function() {
+    // Fallback: try without spaces
+    imgElement.src = `Contents/${encodeURIComponent(currentManga.title)}/${encodeURIComponent(currentVersion.name)}/(${pageNum}).jpg`;
+    
+    imgElement.onerror = function() {
+      loadingElement.textContent = "Page not found";
+    };
+  };
+}
+
+function openVersion(manga, version) {
+  currentManga = manga;
+  currentVersion = version;
+  currentPage = 1;
+  readerTitle.textContent = `${manga.title} - ${version.name}`;
+  pageInput.max = version.pages;
+  showView(readerView);
+  loadPage(1);
+}
+
+function toggleMode() {
+  isBookMode = !isBookMode;
+  
+  if (isBookMode) {
+    document.getElementById("rightPageContainer").parentElement.classList.remove("hidden");
+    modeToggle.textContent = "📖 Book Mode";
+  } else {
+    document.getElementById("rightPageContainer").parentElement.classList.add("hidden");
+    modeToggle.textContent = "📜 Scroll Mode";
+  }
+  
+  loadPage(currentPage);
+}
+
+// Event Listeners
 backBtn.addEventListener("click", () => {
   if (!readerView.classList.contains("hidden")) {
     openManga(currentManga);
@@ -141,17 +189,46 @@ backFromReaderBtn.addEventListener("click", () => {
   openManga(currentManga);
 });
 
-// Keyboard navigation in reader
+prevBtn.addEventListener("click", () => {
+  const newPage = isBookMode ? currentPage - 2 : currentPage - 1;
+  loadPage(Math.max(1, newPage));
+});
+
+nextBtn.addEventListener("click", () => {
+  const newPage = isBookMode ? currentPage + 2 : currentPage + 1;
+  loadPage(Math.min(currentVersion.pages, newPage));
+});
+
+pageInput.addEventListener("input", (e) => {
+  loadPage(parseInt(e.target.value));
+});
+
+modeToggle.addEventListener("click", toggleMode);
+
+// Keyboard navigation
 document.addEventListener("keydown", (e) => {
   if (readerView.classList.contains("hidden")) return;
   
-  if (e.key === "ArrowUp") {
-    window.scrollBy(0, -200);
-  } else if (e.key === "ArrowDown") {
-    window.scrollBy(0, 200);
+  if (e.key === "ArrowLeft") {
+    prevBtn.click();
+  } else if (e.key === "ArrowRight") {
+    nextBtn.click();
   } else if (e.key === "Escape") {
-    openManga(currentManga);
+    backFromReaderBtn.click();
   }
+});
+
+// Click on image to navigate
+leftPageImg.addEventListener("click", (e) => {
+  if (e.clientX < leftPageImg.offsetWidth / 2) {
+    prevBtn.click();
+  } else {
+    nextBtn.click();
+  }
+});
+
+rightPageImg.addEventListener("click", (e) => {
+  nextBtn.click();
 });
 
 renderLibrary();
