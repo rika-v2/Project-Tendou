@@ -1,10 +1,17 @@
 function initNavbar() {
-    const scriptUrl = document.currentScript
-        ? new URL(document.currentScript.src, window.location.href)
-        : new URL('navbar-init.js', window.location.href);
-    const navbarUrl = new URL('navbar.html', scriptUrl).href;
-
-    fetch(navbarUrl)
+    const isFileProtocol = location.protocol === 'file:';
+    const currentPath = location.pathname;
+    
+    // Detect if we're in a subfolder
+    const isSubfolder = currentPath.includes('/Tech%20Files/') || currentPath.includes('/Tech Files/')
+        || currentPath.includes('/Post%20Haste/') || currentPath.includes('/Post Haste/')
+        || currentPath.includes('/Archived/');
+    
+    // Build correct path to navbar.html
+    const pathPrefix = isSubfolder ? '../' : '';
+    const navbarPath = pathPrefix + 'navbar.html';
+    
+    fetch(navbarPath)
         .then(response => response.text())
         .then(html => {
             const container = document.getElementById('navbar-container');

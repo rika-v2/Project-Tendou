@@ -3,90 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Archived Manga Reader</title>
-
+  <title>Archived Manga</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .manga-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.5rem;
+    }
+    .manga-card img {
+      transition: transform 0.3s ease;
+    }
+    .manga-card:hover img {
+      transform: scale(1.05);
+    }
+    .manga-card-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 1rem;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .manga-card:hover .manga-card-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
-<body class="bg-zinc-950 text-zinc-100 overflow-hidden">
+<body class="bg-slate-950 text-slate-100">
+  <!-- Load Navbar -->
+  <div id="navbar-container"></div>
+  <script src="../navbar-init.js"></script>
 
-  <!-- TOP BAR -->
-  <header class="fixed top-0 left-0 right-0 z-50
-                 flex items-center justify-between
-                 px-4 py-3
-                 bg-zinc-900/80 backdrop-blur border-b border-zinc-800">
+  <!-- MAIN CONTENT -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <div class="flex items-center gap-3">
-      <button
-        id="openLibraryBtn"
-        class="px-4 py-2 rounded-lg
-               bg-zinc-800 hover:bg-zinc-700
-               transition"
-      >
-        Open Library
-      </button>
+    <!-- LIBRARY VIEW -->
+    <section id="libraryView">
+      <div class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2">Archived Manga</h1>
+        <p class="text-slate-400">Browse and read archived manga collections</p>
+      </div>
 
-      <button
-        id="backBtn"
-        class="hidden px-4 py-2 rounded-lg
-               bg-zinc-800 hover:bg-zinc-700
-               transition"
-      >
-        Back
-      </button>
-    </div>
-
-    <div class="text-sm text-zinc-400">
-      Archived Manga Reader
-    </div>
-  </header>
-
-  <!-- MAIN -->
-  <main class="pt-20 h-screen">
-
-    <!-- LIBRARY -->
-    <section
-      id="libraryView"
-      class="p-6 overflow-y-auto h-full"
-    >
-      <h1 class="text-3xl font-bold mb-6">
-        Library
-      </h1>
-
-      <div
-        id="libraryGrid"
-        class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5"
-      ></div>
+      <div id="libraryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
     </section>
 
-    <!-- CHAPTERS -->
-    <section
-      id="chaptersView"
-      class="hidden p-6 overflow-y-auto h-full"
-    >
-      <h1
-        id="mangaTitle"
-        class="text-3xl font-bold mb-6"
-      ></h1>
+    <!-- CHAPTERS VIEW -->
+    <section id="chaptersView" class="hidden">
+      <div class="mb-8 flex items-center gap-4">
+        <button id="backBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium">
+          ← Back to Library
+        </button>
+        <div>
+          <h1 id="mangaTitle" class="text-4xl font-bold"></h1>
+          <p id="mangaDescription" class="text-slate-400 mt-2"></p>
+        </div>
+      </div>
 
-      <div
-        id="chaptersList"
-        class="flex flex-col gap-3"
-      ></div>
+      <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-800/50">
+        <h2 class="text-xl font-bold mb-6">Chapters</h2>
+        <div id="chaptersList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
     </section>
 
-    <!-- READER -->
-    <section
-      id="readerView"
-      class="hidden overflow-y-auto h-full bg-black"
-    >
-      <div
-        id="readerContainer"
-        class="flex flex-col items-center gap-1 py-6"
-      ></div>
+    <!-- READER VIEW -->
+    <section id="readerView" class="hidden">
+      <div class="mb-6 flex items-center gap-4">
+        <button id="backFromReaderBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium">
+          ← Back
+        </button>
+        <h2 id="readerTitle" class="text-2xl font-bold"></h2>
+      </div>
+      <div id="readerContainer" class="flex flex-col items-center gap-2 bg-black rounded-lg p-4"></div>
     </section>
 
   </main>
+
   <script src="./manifest.js"></script>
   <script src="./archived.js"></script>
 </body>
