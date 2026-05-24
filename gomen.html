@@ -38,12 +38,6 @@
      <audio id="ambientMusic" loop>
         <source src="audio/命に嫌われているまふまふ歌ってみた.mp3" type="audio/mpeg">
     </audio>
-    
-    <!-- Mute button in navbar or fixed position -->
-     <button id="musicToggle" class="fixed bottom-4 right-4 z-50 bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-full transition">
-        Music Enabled
-    </button>
-
 
     <script src="navbar-init.js">
         const audio = document.getElementById('ambientMusic');
@@ -53,17 +47,6 @@
     // Try autoplay
     audio.play().catch(() => {
         document.addEventListener('click', () => audio.play(), { once: true });
-    });
-    
-    // Toggle music
-    toggle.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            toggle.textContent = 'Music Enabled';
-        } else {
-            audio.pause();
-            toggle.textContent = 'Music Disabled';
-        }
     });
     </script>
 </body>
