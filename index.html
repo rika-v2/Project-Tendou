@@ -10,6 +10,14 @@
         body { font-family: 'Inter', sans-serif; }
         .text-shadow-sky-300 { text-shadow: 0 0 10px rgba(56, 189, 248, 0.7); }
         .text-shadow-red-500 { text-shadow: 0 0 10px rgba(255, 1, 1, 0.7); }
+        /* Mobile background handling */
+        @media (max-width: 768px) {
+            .video-bg-desktop { display: none; }
+            .bg-mobile-fallback { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        }
+        @media (min-width: 769px) {
+            .bg-mobile-fallback { display: none; }
+        }
     </style>
     <meta name="color-scheme" content="dark">`
 </head>
@@ -17,14 +25,15 @@
     <!-- Load the Navbar -->
     <div id="navbar-container"></div>
 
-    <!-- Fullscreen video background -->
-    <div class="fixed inset-0 -z-10">
+    <!-- Fullscreen background - video for desktop, gradient for mobile -->
+    <div class="fixed inset-0 -z-10 video-bg-desktop">
         <video autoplay muted loop playsinline class="w-full h-full object-cover">
             <source src="images/mari1.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="absolute inset-0 bg-black/50"></div>
     </div>
+    <div class="fixed inset-0 -z-10 bg-mobile-fallback"></div>
 
     <!-- Decorative header using Post Haste UI -->
     <div class="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 py-8 sm:py-16 md:py-40 text-center">

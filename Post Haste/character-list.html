@@ -13,16 +13,16 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
     </style>
 </head>
-<body class="min-h-screen p-6 md:p-12 bg-slate-950">
+<body class="min-h-screen p-3 sm:p-6 md:p-12 bg-slate-950">
     <div id="navbar-container" class="w-full"></div>
     <script src="../navbar-init.js"></script>
     <div class="max-w-6xl mx-auto">
-        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <header class="mb-6 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-6">
             <div>
-                <h1 class="text-4xl font-black text-white tracking-tight mb-2">Characters <span class="text-emerald-500">List</span></h1>
-                <p class="text-slate-400 font-medium">Complete mapping of Trekker IDs to their unique Potential names.</p>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-1 sm:mb-2">Characters <span class="text-emerald-500">List</span></h1>
+                <p class="text-xs sm:text-sm md:text-base text-slate-400 font-medium">Complete mapping of Trekker IDs to their unique Potential names.</p>
             </div>
-            <a href="index.html" class="inline-flex items-center justify-center px-6 py-3 bg-slate-900 border border-slate-800 text-white rounded-xl hover:bg-slate-800 transition-all font-bold gap-2">
+            <a href="ph-main.html" class="inline-flex items-center justify-center px-6 py-3 bg-slate-900 border border-slate-800 text-white rounded-xl hover:bg-slate-800 transition-all font-bold gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -30,7 +30,7 @@
             </a>
         </header>
 
-        <div id="supportContent" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div id="supportContent" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             <!-- Injected via Script -->
         </div>
     </div>
@@ -43,18 +43,18 @@
             let html = '';
 
             if (supportedIds.length === 0) {
-                html = `<div class="text-center p-12 bg-slate-900 rounded-3xl border border-slate-800 text-slate-500">No custom potentials configured in data.js yet.</div>`;
+                html = `<div class="text-center p-6 sm:p-12 col-span-full bg-slate-900 rounded-3xl border border-slate-800 text-slate-500 text-xs sm:text-base">No custom potentials configured in data.js yet.</div>`;
             }
 
             supportedIds.forEach(id => {
                 const name = trekkerDB[id] || 'Unknown Trekker';
                 const stars = trekkerStars[id] || 4;
                 html += `
-                    <a href="trekker-data.html?id=${id}" class="bg-slate-900 border border-slate-800 p-6 rounded-3xl hover:border-emerald-500/50 hover:bg-slate-800/50 transition-all group text-center flex flex-col items-center">
-                        <img src="assets/trekkers/${id}.webp" class="w-24 h-24 rounded-2xl object-cover mb-4 shadow-xl bg-slate-950 border border-slate-800" onerror="this.style.opacity='0'">
+                    <a href="trekker-data.html?id=${id}" class="bg-slate-900 border border-slate-800 p-3 sm:p-6 rounded-3xl hover:border-emerald-500/50 hover:bg-slate-800/50 transition-all group text-center flex flex-col items-center">
+                        <img src="assets/trekkers/${id}.webp" class="w-16 sm:w-24 h-16 sm:h-24 rounded-2xl object-cover mb-2 sm:mb-4 shadow-xl bg-slate-950 border border-slate-800" onerror="this.style.opacity='0'">
                         <div class="text-xs font-bold ${stars === 5 ? 'text-amber-400' : 'text-purple-400'} mb-1">${'★'.repeat(stars)}</div>
-                        <h2 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">${name}</h2>
-                        <span class="text-[10px] text-slate-500 font-mono mt-2">ID: ${id}</span>
+                        <h2 class="text-sm sm:text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">${name}</h2>
+                        <span class="text-[8px] sm:text-[10px] text-slate-500 font-mono mt-1 sm:mt-2">ID: ${id}</span>
                     </a>`;
             });
             supportContent.innerHTML = html;
